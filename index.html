@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9efdf">
+  <meta name="description" content="An offline-ready network status monitor.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Network Monitor</title>
+</head>
+<body>
+  <main class="app">
+    <section class="connection" aria-label="Network connection status">
+      <span id="status-indicator" class="status-indicator" aria-hidden="true"></span>
+      <output id="link-state" class="link-state" aria-live="polite">Checking</output>
+    </section>
+    <p id="status-detail" class="status-detail">Monitor stopped</p>
+
+    <div class="actions">
+      <button id="start-button" class="button button-primary" type="button" aria-pressed="false">
+        Start Network
+      </button>
+      <button id="install-button" class="button button-secondary" type="button">
+        Install app
+      </button>
+    </div>
+    <p id="install-message" class="install-message" role="status" aria-live="polite"></p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>

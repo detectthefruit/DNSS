@@ -1,0 +1,5 @@
+{
+  "name": "DNSS",
+  "image": "://microsoft.com",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y network-manager"
+}

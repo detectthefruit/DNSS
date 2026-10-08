@@ -1,0 +1,136 @@
+:root {
+  color-scheme: light;
+  --paper: #e9efdf;
+  --ink: #172522;
+  --muted: #617069;
+  --line: #aab4a5;
+  --signal: #d6fa54;
+  --blue: #3864b5;
+  font-family: "Avenir Next", "Trebuchet MS", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--paper);
+}
+
+body {
+  display: grid;
+  min-width: 320px;
+  min-height: 100svh;
+  place-items: center;
+  margin: 0;
+  padding: 24px;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+button,
+output {
+  font: inherit;
+}
+
+.app {
+  display: grid;
+  width: min(100%, 340px);
+  justify-items: stretch;
+  gap: 14px;
+}
+
+.connection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 54px;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.link-state {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.status-detail,
+.install-message {
+  min-height: 18px;
+  margin: 0;
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.button {
+  width: 100%;
+  min-height: 56px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.button-primary {
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.button-primary:hover {
+  color: var(--ink);
+  background: var(--signal);
+}
+
+.button-secondary {
+  color: var(--ink);
+  background: transparent;
+}
+
+.button-secondary:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+body[data-connection="online"] .status-indicator {
+  background: #397b44;
+}
+
+body[data-connection="offline"] .status-indicator {
+  background: #bd4638;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

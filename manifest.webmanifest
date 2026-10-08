@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Network Monitor",
+  "short_name": "Network",
+  "description": "Offline-ready network status monitor.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e9efdf",
+  "theme_color": "#e9efdf",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
