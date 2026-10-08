@@ -1,56 +1,75 @@
-switch to another network, change Wi-Fi/DNS/gateway settings, or launch the Python
-or restoration of the router's internet service. On ChromeOS, Wi-Fi recovery and
-# Share Ethernet Internet with a Chromebook
+# Wi-Fi Hotspot
 
-This guide explains how to use a Linux computer to share its working Ethernet
-internet as a Wi-Fi network for your Chromebook. The Linux computer makes the
-Wi-Fi network; the Chromebook joins it like any other Wi-Fi network.
+This package lets a Linux computer share its working Ethernet internet as a
+Wi-Fi network for a Chromebook. It cannot provide internet if the Ethernet
+connection itself is offline.
 
-The PWA in this project is only an offline status screen. It does not create
-the hotspot or provide internet access.
+## Install
 
-## Before You Start
-
-You need:
-
-- A Linux computer with this project available on it
-- An Ethernet cable and an internet connection that works on the Linux computer
-- A Wi-Fi adapter in the Linux computer that supports hotspot mode
-
-The Linux computer and Chromebook are separate devices. Run the commands below
-on the Linux computer itself, not in a Codespaces terminal.
-
-## Start the Hotspot
-
-1. Plug the Ethernet cable into the Linux computer.
-2. Check that the Linux computer can open a website over Ethernet.
-3. Open a terminal in the project folder and run:
-
-   ```sh
-   sudo python3 linux_hotspot.py start --ssid "Chromebook Internet"
-   ```
-
-4. Enter your Linux password if asked. NetworkManager will then ask for a
-   password for the new Wi-Fi network. Choose one and remember it.
-5. On the Chromebook, open the network menu, turn on Wi-Fi, and select
-   **Chromebook Internet**.
-6. Enter the Wi-Fi password you chose. Open a website to check that the
-   Chromebook has internet access.
-
-## Stop the Hotspot
-
-When you are finished, run this on the Linux computer:
+After `wifi-hotspot` has been published to PyPI, install it in a virtual
+environment:
 
 ```sh
-sudo python3 linux_hotspot.py stop
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install wifi-hotspot
 ```
 
-## If It Does Not Work
+## Connect the Chromebook
 
-- If the Linux computer cannot browse the internet over Ethernet, the hotspot
-  cannot provide internet to the Chromebook.
-- If the script reports that it cannot find a suitable Wi-Fi adapter, the
-  adapter may not support hotspot mode. You may need another adapter.
-- If you are using Codespaces, run the helper from the project on the physical
-  Linux computer instead. Codespaces cannot control that computer's network
-  hardware.
+You need a Linux computer with internet working over Ethernet and a Wi-Fi
+adapter that supports hotspot mode. Run these steps on the Linux computer
+itself, not in a Codespaces terminal.
+
+1. Plug the Ethernet cable into the Linux computer and check that it can open
+   a website.
+2. Start the hotspot:
+
+   ```sh
+   sudo "$(command -v wifi-hotspot)" start --ssid "Chromebook Internet"
+   ```
+
+3. Enter your Linux password if asked. NetworkManager will ask you to choose a
+   password for the new Wi-Fi network. Remember it.
+4. On the Chromebook, open the network menu, turn on Wi-Fi, and select
+   **Chromebook Internet**.
+5. Enter the Wi-Fi password and open a website to check the connection.
+
+Stop the hotspot from the Linux computer when finished:
+
+```sh
+sudo "$(command -v wifi-hotspot)" stop
+```
+
+If the helper cannot find a suitable Wi-Fi adapter, the adapter may not support
+hotspot mode. If Ethernet does not provide internet to the Linux computer, the
+hotspot cannot provide internet to the Chromebook.
+
+The package also provides `network-resilience status` for network diagnostics.
+The PWA files in this repository are a separate offline status screen; they
+are not part of the PyPI package.
+
+## Build and Publish
+
+From the project directory, build and check the package:
+
+```sh
+python3 -m pip install --upgrade build twine
+python3 -m build
+python3 -m twine check dist/wifi_hotspot-*
+```
+
+Create a PyPI API token in your PyPI account. Upload without putting the token
+in the command or saving it in the project:
+
+```sh
+export TWINE_USERNAME=__token__
+read -rsp "PyPI token: " TWINE_PASSWORD
+printf '\n'
+python3 -m twine upload dist/wifi_hotspot-*
+unset TWINE_USERNAME TWINE_PASSWORD
+```
+
+`wifi-hotspot` returned as available when checked, but another user may claim
+the name before upload. This package also retains `dnss-hotspot` as an alias.
+Never share your PyPI token or commit it to the repository.

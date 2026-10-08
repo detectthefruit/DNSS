@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wifi-hotspot"
+version = "0.1.0"
+description = "Linux Wi-Fi hotspot sharing and network resilience command-line tools"
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["linux", "network", "wifi", "hotspot", "dns"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.scripts]
+wifi-hotspot = "linux_hotspot:main"
+dnss-hotspot = "linux_hotspot:main"
+network-resilience = "network_resilience:main"
+
+[tool.setuptools]
+py-modules = ["linux_hotspot", "network_resilience"]
